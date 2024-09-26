@@ -12,3 +12,128 @@
 \label{sec:pruebasHW}
 
 La idea de esta sección es explicar cómo se hicieron los ensayos, qué resultados se obtuvieron y analizarlos.
+
+\subsection{Insertar codigo}
+Se puede agregar código o pseudocódigo dentro de un entorno lstlisting con el siguiente código:
+
+\begin{verbatim}
+\begin{lstlisting}[caption= "un epígrafe descriptivo"]
+	las líneas de código irían aquí...
+\end{lstlisting}
+\end{verbatim}
+
+A modo de ejemplo:
+
+\begin{lstlisting}[label=cod:vControl,caption=Pseudocódigo del lazo principal de control.]  % Start your code-block
+
+#define MAX_SENSOR_NUMBER 3
+#define MAX_ALARM_NUMBER  6
+#define MAX_ACTUATOR_NUMBER 6
+
+uint32_t sensorValue[MAX_SENSOR_NUMBER];		
+FunctionalState alarmControl[MAX_ALARM_NUMBER];	//ENABLE or DISABLE
+state_t alarmState[MAX_ALARM_NUMBER];						//ON or OFF
+state_t actuatorState[MAX_ACTUATOR_NUMBER];			//ON or OFF
+
+void vControl() {
+
+	initGlobalVariables();
+	
+	period = 500 ms;
+		
+	while(1) {
+
+		ticks = xTaskGetTickCount();
+		
+		updateSensors();
+		
+		updateAlarms();
+		
+		controlActuators();
+		
+		vTaskDelayUntil(&ticks, period);
+	}
+}
+\end{lstlisting}
+
+
+
+\subsection{Tablas}
+
+Para las tablas utilizar el mismo formato que para las figuras, sólo que el epígrafe se debe colocar arriba de la tabla, como se ilustra en la tabla \ref{tab:peces}. Observar que sólo algunas filas van con líneas visibles y notar el uso de las negritas para los encabezados.  La referencia se logra utilizando el comando \verb|\ref{<label>}| donde label debe estar definida dentro del entorno de la tabla.
+
+\begin{verbatim}
+\begin{table}[h]
+	\centering
+	\caption[caption corto]{caption largo más descriptivo}
+	\begin{tabular}{l c c}    
+		\toprule
+		\textbf{Especie}     & \textbf{Tamaño} & \textbf{Valor}\\
+		\midrule
+		Amphiprion Ocellaris & 10 cm           & \$ 6.000 \\		
+		Hepatus Blue Tang    & 15 cm           & \$ 7.000 \\
+		Zebrasoma Xanthurus  & 12 cm           & \$ 6.800 \\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:peces}
+\end{table}
+\end{verbatim}
+
+
+\begin{table}[h]
+	\centering
+	\caption[caption corto]{caption largo más descriptivo}
+	\begin{tabular}{l c c}    
+		\toprule
+		\textbf{Especie} 	 & \textbf{Tamaño} 		& \textbf{Valor}  \\
+		\midrule
+		Amphiprion Ocellaris & 10 cm 				& \$ 6.000 \\		
+		Hepatus Blue Tang	 & 15 cm				& \$ 7.000 \\
+		Zebrasoma Xanthurus	 & 12 cm				& \$ 6.800 \\
+		\bottomrule
+		\hline
+	\end{tabular}
+	\label{tab:peces}
+\end{table}
+
+En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, figura 2.1 o tabla 2.1, pero no se debe reiniciar el conteo en cada sección. Por suerte la plantilla se encarga de esto por nosotros.
+
+\subsection{Ecuaciones}
+\label{sec:Ecuaciones}
+
+Al insertar ecuaciones en la memoria dentro de un entorno \textit{equation}, éstas se numeran en forma automática  y se pueden referir al igual que como se hace con las figuras y tablas, por ejemplo ver la ecuación \ref{eq:metric}.
+
+\begin{equation}
+	\label{eq:metric}
+	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + \sigma^2\left[ d\theta^2 + \sin^2\theta d\phi^2 \right] \right)
+\end{equation}
+                                                        
+Es importante tener presente que si bien las ecuaciones pueden ser referidas por su número, también es correcto utilizar los dos puntos, como por ejemplo ``la expresión matemática que describe este comportamiento es la siguiente:''
+
+\begin{equation}
+	\label{eq:schrodinger}
+	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = -i\hbar \frac{\partial\Psi}{\partial t}
+\end{equation}
+
+Para generar la ecuación \ref{eq:metric} se utilizó el siguiente código:
+
+\begin{verbatim}
+\begin{equation}
+	\label{eq:metric}
+	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + 
+	\sigma^2\left[ d\theta^2 + 
+	\sin^2\theta d\phi^2 \right] \right)
+\end{equation}
+\end{verbatim}
+
+Y para la ecuación \ref{eq:schrodinger}:
+
+\begin{verbatim}
+\begin{equation}
+	\label{eq:schrodinger}
+	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = 
+	-i\hbar \frac{\partial\Psi}{\partial t}
+\end{equation}
+
+\end{verbatim}
