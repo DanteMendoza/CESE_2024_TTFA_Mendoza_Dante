@@ -43,15 +43,15 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-En este capítulo se detallan los problemas encontrados durante el desarrollo del proyecto y los criterios que guiaron la toma de decisiones. Se expondrán las justificaciones técnicas y estratégicas de las soluciones implementadas, con un enfoque en cómo cada decisión contribuyó al logro de los objetivos planteados. Además, se presentan diversos diagramas que contribuyen a ilustrar la arquitectura y el flujo de trabajo del sistema. Este enfoque permite una comprensión completa del proceso de diseño y desarrollo del prototipo KiwiScan.
+En este capítulo se detallan los problemas encontrados durante el desarrollo del proyecto y los criterios que guiaron la toma de decisiones. Se exponen las justificaciones técnicas y estratégicas de las soluciones implementadas, con un enfoque en cómo cada decisión contribuyó al logro de los objetivos planteados. Además, se incluye diversos diagramas que contribuyen a ilustrar la arquitectura y el flujo de trabajo del sistema. Este enfoque permite una comprensión integral del proceso de diseño y desarrollo del prototipo KiwiScan.
 
 \section{Composición general del sistema}
 
-El prototipo KiwiScan se compone de tres partes esenciales que cumplen funciones clave: el nodo sensor, el firmware y el modelo de detección de objetos. Cada una de estas partes se describen a continuación. 
+El prototipo KiwiScan se compone de tres partes esenciales que cumplen funciones clave: el nodo sensor, el firmware y el modelo de detección de objetos. A continuación, se describe cada una de estas partes.
 
 \subsection{Diagrama de componentes}
 
-En esta sección, se presenta el diagrama de componentes en la figura \ref{fig:diagrama_de_componentes}, que detalla las tres partes fundamentales que conforman el sistema KiwiScan: el nodo sensor, el firmware y el modelo de detección de objetos. Este diagrama no solo ilustra la estructura general del prototipo, sino también cómo interactúan entre sí estos componentes para cumplir los objetivos del trabajo.
+En esta sección, se presenta el diagrama de componentes en la figura \ref{fig:diagrama_de_componentes}. Este diagrama no solo ilustra la estructura general del prototipo, sino también la interacción entre los componentes para cumplir con los objetivos del trabajo.
 
 \newpage
 
@@ -66,25 +66,25 @@ En esta sección, se presenta el diagrama de componentes en la figura \ref{fig:d
 
 \vspace{1cm}
 
-El diagrama de componentes no solo ofrece una representación visual clara del sistema KiwiScan, sino que también facilita la comprensión de cómo las distintas partes están interconectadas y cómo colaboran para cumplir con las tareas de detección de frutos. El flujo de información entre el nodo sensor, el firmware y el modelo de detección de objetos establece una secuencia lógica en la cual cada componente desempeña un rol clave para el funcionamiento del sistema.
+El diagrama de componentes ofrece una representación visual clara del sistema KiwiScan y facilita la comprensión de cómo las distintas partes se interconectan y colaboran para cumplir con las tareas de detección de frutos. El flujo de información entre el nodo sensor, el firmware y el modelo de detección de objetos establece una secuencia lógica en la que cada componente desempeña un rol clave para el funcionamiento del sistema.
 
 \subsection{El nodo sensor}
 
-El nodo sensor constituye el elemento físico del sistema, encargado de adquirir las imágenes de la plantación de manera automatizada. Está compuesto por cámaras y otros sensores que recopilan información relevante, como las condiciones ambientales. Estos dispositivos se conectan al sistema para capturar datos visuales y ambientales que serán procesados posteriormente. Su principal función es proporcionar los datos necesarios para la siguiente fase, asegurando que las imágenes sean de suficiente calidad para permitir la detección de los frutos. A continuación, se describen en detalle los sensores y periféricos seleccionados que forman parte del nodo:
+El nodo sensor constituye el elemento físico del sistema, encargado de adquirir imágenes de la plantación de manera automatizada. Este se compone de cámaras y otros sensores que recopilan información relevante, como las condiciones ambientales. Estos dispositivos se conectan al sistema para capturar datos visuales y ambientales que serán procesados posteriormente. Su principal función es proporcionar los datos necesarios para la siguiente fase, asegurando que las imágenes sean de calidad suficiente para permitir la detección de los frutos. A continuación, se describen en detalle los sensores y periféricos seleccionados que forman parte del nodo:
 
 \newpage
 
 \begin{itemize}
-\item La cámara Ov7670 es el elemento central para adquirir imágenes en el sistema. Su elección se basó en la capacidad de la cámara para ajustar automáticamente la exposición y el balance de blancos mantiene una calidad de imagen uniforme, incluso bajo condiciones de iluminación cambiantes. Esta característica es especialmente valiosa en las plantaciones de kiwi, donde la disposición de las hojas genera contrastes y sombras, y la iluminación varía según la hora del día, optimizando la calidad de las imágenes obtenidas en diferentes entornos de luz.
+\item La cámara Ov7670 es el elemento central para adquirir imágenes en el sistema. Su elección se basó en la capacidad de la cámara para ajustar automáticamente la exposición y el balance de blancos mantiene una calidad de imagen uniforme, incluso bajo condiciones de iluminación cambiantes. Esta característica es especialmente valiosa en las plantaciones de kiwi, donde la disposición de las hojas genera contrastes y sombras, y la iluminación varía según la hora del día, lo que permite optimizar la calidad de las imágenes obtenidas en diferentes entornos de luz.
 
-\item El sensor de temperatura y humedad DHT11 recopila datos ambientales que complementan la información visual, proporcionando un perfil más completo de las condiciones en las que se encuentra la plantación. Estas mediciones pueden ajustarse para optimizar los algoritmos de procesamiento de imágenes, mejorando la detección de frutos en situaciones adversas.
-\item El sensor ultrasónico HC-SR04 se utiliza para asegurar que las imágenes capturadas se realicen a una distancia óptima de los frutos, garantizando que los kiwis ocupen un espacio adecuado dentro del campo de visión de la cámara.
+\item El sensor de temperatura y humedad DHT11 recopila datos ambientales que complementan la información visual y  permiten obtener un perfil más completo de las condiciones en las que se encuentra la plantación. Estas mediciones pueden ajustarse para optimizar los algoritmos de procesamiento de imágenes y así mejorar la detección de frutos en situaciones adversas.
+\item El sensor ultrasónico HC-SR04 se utiliza para asegurar que las imágenes capturadas se realicen a una distancia óptima de los frutos, lo que garantiza que los kiwis ocupen un espacio adecuado dentro del campo de visión de la cámara.
 \item La pantalla LCD funciona como una interfaz directa para el usuario en el nodo sensor. Presenta información relevante, como la distancia medida por el sensor ultrasónico, los datos de temperatura y humedad proporcionados por el DHT11, y el estado de las imágenes capturadas por la cámara.
 \item El lector de tarjetas SD es crucial para el almacenamiento de las imágenes capturadas y los datos ambientales registrados por los sensores.
 \item La placa de desarrollo STM32 Nucleo-F429ZI actúa como el cerebro del nodo sensor. Procesa las señales de los sensores y gestiona la adquisición de datos. La STM32 se comunica con los sensores mediante diversos protocolos, como UART para el sensor ultrasónico e I2C para la pantalla LCD, lo que asegura un funcionamiento coordinado del nodo.
 \end{itemize}
 
-El nodo sensor no solo recopila datos visuales y ambientales, sino que también ofrece una interfaz directa para los operadores mediante la pantalla LCD, y almacena la información adquirida en el recorrido. Estas funciones permiten que el sistema funcione de manera autónoma, registrando datos valiosos para su análisis posterior. Además, la modularidad del nodo facilita la expansión del sistema en futuras versiones, con la posibilidad de incorporar más sensores o mejorar su capacidad de procesamiento. La figura \ref{fig:nodo_sensor} muestra la composición de este nodo.
+El nodo sensor no solo recopila datos visuales y ambientales, sino que también ofrece una interfaz directa para los operadores mediante la pantalla LCD y almacena la información adquirida en el recorrido. Estas funciones permiten que el sistema funcione de manera autónoma, registrando datos valiosos para su análisis posterior. Además, la modularidad del nodo facilita la expansión del sistema en futuras versiones, con la posibilidad de incorporar más sensores o mejorar su capacidad de procesamiento. La figura \ref{fig:nodo_sensor} muestra la composición de este nodo.
 
 \vspace{1cm}
 
@@ -101,7 +101,7 @@ El nodo sensor no solo recopila datos visuales y ambientales, sino que también 
 
 \subsection{El firmware del sistema}
 
-El firmware controla toda la lógica operativa del sistema y actúa como el vínculo entre los sensores, el procesamiento de datos y el almacenamiento de información. Además, coordina las actividades de los diversos componentes del hardware, ejecutando cada tarea de manera precisa para maximizar la eficiencia operativa del sistema. Su diseño se basa en una estructura por capas que optimiza la organización y legibilidad del código, simplificando tanto la gestión como el mantenimiento de su complejidad. La figura \ref{fig:firmware_general} muestra la división en capas del firmware desarrollado.
+El firmware controla la lógica operativa del sistema y actúa como el vínculo entre los sensores, el procesamiento de datos y el almacenamiento de información. Además, coordina las actividades de los diversos componentes del hardware y ejecuta cada tarea de manera precisa para maximizar la eficiencia operativa del sistema. Su diseño se basa en una estructura por capas que optimiza la organización y legibilidad del código, lo que simplifica la gestión y el mantenimiento de su complejidad. La figura \ref{fig:firmware_general} muestra la división en capas del firmware desarrollado.
 
 \newpage
 
@@ -109,7 +109,7 @@ El firmware controla toda la lógica operativa del sistema y actúa como el vín
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.7\textwidth, height=0.5\textheight]{./Figures/firmware_general.png}
+	\includegraphics[width=0.5\textwidth, height=0.7\textheight]{./Figures/firmware_general.png}
 	\caption{Capas del firmware.}
 	\label{fig:firmware_general}
 \end{figure}
@@ -118,12 +118,12 @@ El firmware controla toda la lógica operativa del sistema y actúa como el vín
 
 \subsubsection{Capa HAL}
 
-La capa HAL (\textit{Hardware Abstraction Layer}), proporcionada por el fabricante del microcontrolador, representa el nivel más bajo del sistema y permite que las capas superiores interactúen con los periféricos del microcontrolador a través de funciones en lenguaje C. Esta capa abstrae las complejidades del hardware y facilita el acceso a las funcionalidades del microcontrolador, optimizando la eficiencia y modularidad del sistema. A continuación, se describen los módulos clave de la capa HAL utilizados en el firmware:
+La capa HAL (\textit{Hardware Abstraction Layer}), proporcionada por el fabricante del microcontrolador, representa el nivel más bajo del sistema y permite que las capas superiores interactúen con los periféricos del microcontrolador a través de funciones en lenguaje C. Esta capa abstrae las complejidades del hardware y facilita el acceso a las funcionalidades del microcontrolador, lo que mejora la eficiencia y modularidad del sistema. A continuación, se describen los módulos clave de la capa HAL utilizados en el firmware:
 
 \begin{itemize}
 \item GPIO (\textit{General Purpose Input/Output}): proporciona funciones para el manejo de las entradas y salidas digitales del microcontrolador. En este sistema, la capa de aplicación utiliza las funciones GPIO para gestionar los indicadores LED de depuración y controlar el encendido y reinicio del sistema. Estos elementos resultan fundamentales para verificar el correcto funcionamiento y estado del nodo sensor en tiempo real.
-\item UART (\textit{Universal Asynchronous Receiver-Transmitter}): brinda funciones específicas para la lectura y escritura del puerto UART del microcontrolador, permitiendo la comunicación en serie. El firmware emplea estas funciones UART para establecer un enlace con módulos adicionales, facilitando la transmisión de datos sin la necesidad de un reloj compartido. Esta característica es esencial para intercambiar información de manera confiable entre los componentes del sistema.
-\item I2C (\textit{Inter-Integrated Circuit}): proporciona funciones para la transmisión y recepción de datos mediante el protocolo I2C, que permite la comunicación con dispositivos externos. En este proyecto, el driver de la pantalla LCD utiliza el protocolo I2C para actualizar la visualización de datos en tiempo real. La implementación del protocolo I2C permite una integración flexible y eficaz de dispositivos adicionales, optimizando la interacción entre los distintos módulos del sistema.
+\item UART (\textit{Universal Asynchronous Receiver-Transmitter}): brinda funciones específicas para la lectura y escritura del puerto UART del microcontrolador, lo que permite la comunicación en serie. El firmware emplea estas funciones UART para establecer un enlace con módulos adicionales, lo que facilita la transmisión de datos sin la necesidad de un reloj compartido. Esta característica es esencial para intercambiar información de manera confiable entre los componentes del sistema.
+\item I2C (\textit{Inter-Integrated Circuit}): proporciona funciones para la transmisión y recepción de datos mediante el protocolo I2C, que permite la comunicación con dispositivos externos. En este proyecto, el driver de la pantalla LCD utiliza el protocolo I2C para actualizar la visualización de datos en tiempo real. La implementación del protocolo I2C permite una integración flexible y eficaz de dispositivos adicionales, lo que mejora la interacción entre los distintos módulos del sistema.
 \end{itemize}
 
 \subsubsection{Capa drivers}
@@ -137,18 +137,16 @@ Driver de la cámara Ov7670: este controlador permite gestionar la captura de im
 \item Detener captura de imagen: interrumpe el proceso de captura.
 \item Pausar captura de imagen: suspende temporalmente la captura de imágenes sin perder la configuración actual.
 \item Reanudar captura de imagen: retoma la captura desde el estado pausado.
-\item Cambiar resolución de captura de imagen: ajusta la resolución de imagen para adaptarse a los requisitos del sistema y a las condiciones de operación.
+\item Cambiar la resolución de captura de imagen: ajusta la resolución de imagen para adaptarse a los requisitos del sistema y a las condiciones de operación.
 \end{itemize}
 
-Driver para el sensor de temperatura y humedad DHT11: este controlador facilita la adquisición de datos ambientales, proporcionando funciones clave para obtener y procesar las lecturas de temperatura y humedad. Las funcionalidades incluidas son:
+Driver para el sensor de temperatura y humedad DHT11: este controlador facilita la adquisición de datos ambientales y ofrece funciones clave para obtener y procesar las lecturas de temperatura y humedad. Las funcionalidades incluidas son:
 \begin{itemize}
 \item Tomar temperatura: obtiene la temperatura del entorno desde el sensor.
 \item Tomar humedad: adquiere el nivel de humedad ambiente.
 \item Devolver la temperatura en grados Celsius: convierte y presenta la temperatura en la escala Celsius.
 \item Devolver la temperatura en grados Fahrenheit: convierte y muestra la temperatura en la escala Fahrenheit.
 \end{itemize}
-
-\newpage
 
 Driver del sensor ultrasónico HC-SR04: este controlador permite medir la distancia entre el sensor y los objetos cercanos mediante pulsos ultrasónicos. Sus funciones principales son:
 \begin{itemize}
@@ -158,7 +156,7 @@ Driver del sensor ultrasónico HC-SR04: este controlador permite medir la distan
 \item Detener la señal de eco: interrumpe la emisión de pulsos ultrasónicos.
 \end{itemize}
 
-Driver para la pantalla LCD: este controlador gestiona la visualización de datos en la pantalla LCD, ofreciendo al operador información en tiempo real sobre el estado del sistema. Entre las funciones disponibles se encuentran:
+Driver para la pantalla LCD: este controlador gestiona la visualización de datos en la pantalla LCD y ofrece al operador información en tiempo real sobre el estado del sistema. Entre las funciones disponibles se encuentran:
 \begin{itemize}
 \item Refrescar pantalla: actualiza la información mostrada en la pantalla para reflejar los datos más recientes.
 \item Mostrar mensaje en pantalla: presenta un mensaje específico en la pantalla para el usuario.
@@ -196,16 +194,16 @@ El modelo de detección de objetos es el componente encargado de analizar las im
 
 \section{Arquitectura del firmware}
 
-La arquitectura del firmware del sistema está diseñada para optimizar la coordinación y el control de múltiples componentes, asegurando una operación eficiente y una respuesta rápida a eventos internos y externos. Se implementaron dos patrones arquitectónicos principales: el patrón de observar y reaccionar y el de segmentación de procesos, cada uno de los cuales cumple funciones específicas dentro de la estructura del firmware.
+La arquitectura del firmware del sistema está diseñada para optimizar la coordinación y el control de múltiples componentes, asegurando una operación eficiente y una respuesta rápida a eventos internos y externos. Se implementaron dos patrones arquitectónicos principales: el patrón de observar y reaccionar y el de segmentación de procesos, cada uno de ellos cumple funciones específicas dentro de la estructura del firmware.
 
 \subsection{Patrón de observar y reaccionar}
 
-Este patrón mostrado en la figura \ref{fig:patron_de_observar_y_reaccionar} permite que el sistema responda de inmediato a cambios en el entorno o en los estados de los componentes. En la práctica, cada módulo del firmware permanece en constante monitoreo de las señales y datos provenientes de los sensores y dispositivos externos, como el sensor de temperatura y humedad, el sensor ultrasónico y la cámara. Cuando alguno de estos dispositivos genera un cambio relevante en sus lecturas (por ejemplo, una variación de temperatura o una nueva imagen capturada), el sistema ``observa'' esta alteración y automáticamente ``reacciona'' ejecutando las acciones correspondientes, como almacenar los datos en la SD o actualizar la pantalla LCD. Este enfoque facilita una respuesta inmediata a los eventos sin la necesidad de que el sistema esté en modo de consulta continua, lo cual optimiza el uso de los recursos y reduce la latencia en la toma de decisiones.
+Este patrón mostrado en la figura \ref{fig:patron_de_observar_y_reaccionar} permite que el sistema responda de inmediato a cambios en el entorno o en los estados de los componentes. En la práctica, cada módulo del firmware permanece en constante monitoreo de las señales y datos provenientes de los sensores y dispositivos externos, como el sensor de temperatura y humedad, el sensor ultrasónico y la cámara. Cuando alguno de estos dispositivos genera un cambio relevante en sus lecturas (por ejemplo, una variación de temperatura o una nueva imagen capturada), el sistema ``observa'' esta alteración y automáticamente ``reacciona'' ejecutando las acciones correspondientes, como almacenar los datos en la SD o actualizar la pantalla LCD. Este enfoque facilita una respuesta inmediata a los eventos sin la necesidad de que el sistema esté en modo de consulta continua, esto optimiza el uso de los recursos y reduce la latencia en la toma de decisiones.
 
 \vspace{1cm}
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.9\textwidth, height=0.3\textheight]{./Figures/patron_de_observar_y_reaccionar.png}
+	\includegraphics[width=0.9\textwidth, height=0.25\textheight]{./Figures/patron_de_observar_y_reaccionar.png}
 	\caption{Patrón de observar y reaccionar.}
 	\label{fig:patron_de_observar_y_reaccionar}
 \end{figure}
@@ -215,7 +213,7 @@ Este patrón mostrado en la figura \ref{fig:patron_de_observar_y_reaccionar} per
 
 \subsection{Patrón de segmentación de procesos}
 
-Este patrón mostrado en la figura \ref{fig:segmentacion_de_procesos} se utiliza para transformar los datos obtenidos de los sensores, convirtiéndolos de su formato original a una representación adecuada antes de que puedan ser procesados eficazmente. Al realizar esta transformación inicial, el sistema asegura que los datos se presenten de manera uniforme y comprensible, lo que optimiza la precisión y consistencia en las etapas posteriores de procesamiento. Por ejemplo, los valores crudos obtenidos del sensor de temperatura pueden ser transformados en grados Celsius o Fahrenheit según las necesidades del sistema, y los datos del sensor ultrasónico se convierten a medidas en metros o centímetros. Esta normalización facilita que otros módulos del firmware interpreten los datos de manera rápida y sin ambigüedades, lo que permite una respuesta más eficiente y coherente en la operación del sistema.
+Este patrón mostrado en la figura \ref{fig:segmentacion_de_procesos} se utiliza para transformar los datos obtenidos de los sensores, convirtiéndolos de su formato original a una representación adecuada antes de que puedan ser procesados eficazmente. Al realizar esta transformación inicial, el sistema asegura que los datos se presenten de manera uniforme y comprensible, lo que optimiza la precisión y consistencia en las etapas posteriores de procesamiento. Por ejemplo, los valores crudos obtenidos del sensor de temperatura pueden ser transformados en grados Celsius o Fahrenheit según las necesidades del sistema, y los datos del sensor ultrasónico se convierten en metros o centímetros. Esta normalización facilita que otros módulos del firmware interpreten los datos de manera rápida y sin ambigüedades, lo que permite una respuesta más eficiente y coherente en la operación del sistema.
 
 \vspace{1cm}
 \begin{figure}[htbp]
@@ -228,7 +226,7 @@ Este patrón mostrado en la figura \ref{fig:segmentacion_de_procesos} se utiliza
 
 \section{Módulos del firmware}
 
-Los módulos están organizados en el firmware como funciones independientes que operan de forma coordinada y autónoma. Al segmentar el procesamiento, el firmware asigna tareas específicas a cada módulo, permitiendo que estos funcionen de manera paralela y reduciendo el riesgo de interferencias entre procesos. Así, tareas como la captura de imágenes, el monitoreo ambiental y el manejo de la interfaz de usuario pueden ejecutarse sin interrupciones, manteniendo una operación fluida y eficiente. Además, la segmentación facilita la escalabilidad del firmware, ya que los módulos pueden ser modificados o ampliados sin afectar la arquitectura completa, permitiendo agregar nuevos dispositivos o mejorar funcionalidades en futuras versiones del sistema. Se aclara que cada módulo mostrado en la figura \ref{fig:modulos_del_firmware} representa a los drivers mencionados en la sección \ref{Capa_drivers}.
+Los módulos están organizados en el firmware como funciones independientes que operan de forma coordinada y autónoma. Al segmentar el procesamiento, el firmware asigna tareas específicas a cada módulo, permitiendo que estos funcionen de manera paralela y reduciendo el riesgo de interferencias entre procesos. Así, tareas como la captura de imágenes, el monitoreo ambiental y el manejo de la interfaz de usuario pueden ejecutarse sin interrupciones, manteniendo una operación fluida y eficiente. Además, la segmentación facilita la escalabilidad del firmware, ya que los módulos pueden ser modificados o ampliados sin afectar la arquitectura completa, permitiendo agregar nuevos dispositivos o mejorar funcionalidades en futuras versiones del sistema. Cada módulo mostrado en la figura \ref{fig:modulos_del_firmware} representa a los drivers mencionados en la sección \ref{Capa_drivers}.
 
 \newpage
 
@@ -266,12 +264,12 @@ El firmware se implementó sobre FreeRTOS, un sistema operativo en tiempo real a
 
 Este diseño modular del firmware, permite la implementación de colas y semáforos, el sistema logra una comunicación eficiente entre sus distintos módulos, manteniendo la integridad de los datos y evitando bloqueos o conflictos en el flujo de información.
 
-En la Figura \ref{fig:DdF_firmware} se presenta un diagrama de flujo que describe el proceso de inicialización del firmware. Este diagrama ilustra cada uno de los pasos que el sistema sigue desde el arranque, pasando por la configuración de los periféricos y la inicialización de las tareas del sistema, hasta el punto en que el firmware queda listo para operar. La organización detallada del flujo de inicialización asegura que cada módulo y sensor del nodo funcione correctamente y en el orden adecuado, garantizando la estabilidad y eficiencia del sistema durante su funcionamiento.
+En la Figura \ref{fig:DdF_firmware} se presenta un diagrama de flujo que describe el proceso de inicialización del firmware. Este diagrama ilustra cada uno de los pasos que el sistema sigue desde el inicio, pasando por la configuración de los periféricos y la inicialización de las tareas del sistema, hasta el punto en que el firmware queda listo para operar. La organización detallada del flujo de inicialización asegura que cada módulo y sensor del nodo funcione correctamente y en el orden adecuado, garantizando la estabilidad y eficiencia del sistema durante su funcionamiento.
 
 \vspace{1cm}
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.3\textwidth, height=0.5\textheight]{./Figures/DdF_firmware.png}
+	\includegraphics[width=0.3\textwidth, height=0.6\textheight]{./Figures/DdF_firmware.png}
 	\caption{Diagrama de flujo de inicialización del firmware.}
 	\label{fig:DdF_firmware}
 \end{figure}
@@ -280,20 +278,22 @@ En la Figura \ref{fig:DdF_firmware} se presenta un diagrama de flujo que describ
 Para el control del sistema se crearon dos tareas sobre freeRTOS, que se comunican
 y se sincronizan a través de colas y semáforos.
 
+\newpage
+
 \subsection{Tarea adquisición de datos}
 
-La tarea de adquisición de datos cumple un rol esencial al obtener las lecturas de los sensores y garantizar un flujo continuo y preciso de información al sistema. Esta tarea sigue un flujo estructurado, mostrado en el diagrama de flujo de la Figura \ref{fig:DdF_tarea_adquisición_datos}, donde cada paso asegura que los datos sean recogidos y procesados de manera eficiente.
+La tarea de adquisición de datos cumple un rol esencial en la obtención de las lecturas de los sensores y en la garantía de un flujo continuo y preciso de información hacia el sistema. Esta tarea sigue un flujo estructurado, mostrado en el diagrama de flujo de la Figura \ref{fig:DdF_tarea_adquisición_datos}, donde cada paso asegura que los datos sean recogidos y procesados de manera eficiente.
 
-El proceso de adquisición comienza verificando la cola de adquisición para detectar si existen solicitudes pendientes de datos. Si la cola contiene datos, la tarea procede a iniciar la lectura de todos los sensores del sistema. Estos datos, una vez adquiridos, son colocados en la cola de datos y alarmas, lo que permite que otros procesos, como el análisis y las alarmas, accedan a la información en tiempo real.
+El proceso de adquisición comienza verificando la cola de adquisición para detectar si existen solicitudes pendientes de datos. Si la cola contiene datos, la tarea procede a iniciar la lectura de todos los sensores del sistema. Estos datos, una vez adquiridos, se colocan en la cola de datos y alarmas, lo que permite que otros procesos, como el análisis y las alarmas, acceder a la información en tiempo real.
 
 En caso de que la cola de adquisición esté vacía, la tarea de adquisición de datos se bloquea temporalmente para optimizar el uso de recursos, permaneciendo en espera hasta que una nueva solicitud de datos sea recibida en la cola. Esta capacidad de bloqueo y activación automática asegura que el sistema mantenga su eficiencia y libere recursos cuando no se requiera una lectura inmediata, además de garantizar que los datos recogidos sean siempre actuales.
 
-Cada vez que los valores leídos presentan variaciones significativas o caen fuera de los rangos normales, el sistema de alarmas puede actuar en función de estos datos, enviando una alerta al proceso de alarmas, que luego gestiona la respuesta adecuada en el sistema.
+Cada vez que los valores leídos presentan variaciones significativas o caen fuera de los rangos normales, el sistema de alarmas puede actuar en función de estos datos y enviar una alerta al proceso de alarmas, que luego gestiona la respuesta adecuada en el sistema.
 
 \vspace{1cm}
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.4\textwidth, height=0.4\textheight]{./Figures/DdF_tarea_adquisición_datos.png}
+	\includegraphics[width=0.45\textwidth, height=0.45\textheight]{./Figures/DdF_tarea_adquisición_datos.png}
 	\caption{Diagrama de flujo tarea de adquisición de datos.}
 	\label{fig:DdF_tarea_adquisición_datos}
 \end{figure}
@@ -306,16 +306,18 @@ La tarea de manejador de alarmas supervisa los valores de los sensores para aseg
 Al comenzar el bucle infinito de monitoreo, la tarea inspecciona de manera constante la cola de alarmas en busca de eventos. Si se encuentran datos en esta cola, la tarea analiza la información recibida, que puede indicar dos tipos de eventos: monitorear y enviar.
 
 \begin{itemize}
-\item Evento monitorear: La tarea verifica si el valor de cada sensor cae por debajo o excede los valores de límite previamente definidos para cada variable. Si alguno de estos valores infringe los límites, la tarea incrementa una variable que registra la cantidad de alarmas activas en el sistema. Esta información resulta fundamental para monitorear el estado del sistema en tiempo real y detectar situaciones de riesgo de manera inmediata.
+\item Evento monitorear: la tarea verifica si el valor de cada sensor cae por debajo o excede los valores de límite previamente definidos para cada variable. Si alguno de estos valores infringe los límites, la tarea incrementa una variable que registra la cantidad de alarmas activas en el sistema. Esta información resulta fundamental para monitorear el estado del sistema en tiempo real y detectar situaciones de riesgo de manera inmediata.
 \item Evento enviar: se verifica si existen alarmas activas en el sistema. En caso afirmativo, notifica al proceso principal para que ejecute las acciones necesarias, como activar una alerta visual. Esta comunicación garantiza una respuesta rápida y adecuada ante cualquier situación crítica detectada.
 \end{itemize}
 
 Cuando no se encuentran datos en la cola de alarmas, la tarea entra en un estado de bloqueo, optimizando el uso de recursos del sistema al detener temporalmente su ejecución hasta que se reciba un nuevo dato en la cola. Esta estructura permite que el sistema opere de manera eficiente, reaccionando ante anomalías únicamente cuando estas ocurren y sin consumir recursos innecesarios en condiciones normales.
 
+\newpage
+
 \vspace{1cm}
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.9\textwidth, height=0.6\textheight]{./Figures/DdF_tarea_manejador_alarmas.png}
+	\includegraphics[width=1.0\textwidth, height=0.7\textheight]{./Figures/DdF_tarea_manejador_alarmas.png}
 	\caption{Diagrama de flujo de la tarea manejadora de alarmas.}
 	\label{fig:DdF_tarea_manejador_alarmas}
 \end{figure}
