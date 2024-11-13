@@ -43,7 +43,7 @@
 %	SECTION 1
 %----------------------------------------------------------------------------------------
 
-En este capítulo se detallan los problemas encontrados durante el desarrollo del proyecto y los criterios que guiaron la toma de decisiones. Se exponen las justificaciones técnicas y estratégicas de las soluciones implementadas, con un enfoque en cómo cada decisión contribuyó al logro de los objetivos planteados. Además, se incluye diversos diagramas que contribuyen a ilustrar la arquitectura y el flujo de trabajo del sistema. Este enfoque permite una comprensión integral del proceso de diseño y desarrollo del prototipo KiwiScan.
+En este capítulo se detallan los problemas encontrados durante el desarrollo del proyecto y los criterios que guiaron la toma de decisiones. Se exponen las justificaciones técnicas y estratégicas de las soluciones implementadas, con un enfoque en cómo cada decisión contribuyó al logro de los objetivos planteados. Además, se incluyen diversos diagramas que contribuyen a ilustrar la arquitectura y el flujo de trabajo del sistema. Este enfoque permite una comprensión integral del proceso de diseño y desarrollo del prototipo KiwiScan.
 
 \section{Composición general del sistema}
 
@@ -70,7 +70,7 @@ El diagrama de componentes ofrece una representación visual clara del sistema K
 
 \subsection{El nodo sensor}
 
-El nodo sensor constituye el elemento físico del sistema, encargado de adquirir imágenes de la plantación de manera automatizada. Este se compone de cámaras y otros sensores que recopilan información relevante, como las condiciones ambientales. Estos dispositivos se conectan al sistema para capturar datos visuales y ambientales que serán procesados posteriormente. Su principal función es proporcionar los datos necesarios para la siguiente fase, asegurando que las imágenes sean de calidad suficiente para permitir la detección de los frutos. A continuación, se describen en detalle los sensores y periféricos seleccionados que forman parte del nodo:
+El nodo sensor constituye el elemento físico del sistema, encargado de adquirir imágenes de la plantación de manera automatizada. Este se compone de cámaras y otros sensores que recopilan información relevante, como las condiciones ambientales. Estos dispositivos se conectan al sistema para capturar datos visuales y ambientales que serán procesados posteriormente. Su principal función es proporcionar los datos necesarios para la siguiente fase, lo que asegura imágenes de calidad suficiente para permitir la detección de los frutos. A continuación, se describen en detalle los sensores y periféricos seleccionados que forman parte del nodo:
 
 \newpage
 
@@ -84,7 +84,7 @@ El nodo sensor constituye el elemento físico del sistema, encargado de adquirir
 \item La placa de desarrollo STM32 Nucleo-F429ZI actúa como el cerebro del nodo sensor. Procesa las señales de los sensores y gestiona la adquisición de datos. La STM32 se comunica con los sensores mediante diversos protocolos, como UART para el sensor ultrasónico e I2C para la pantalla LCD, lo que asegura un funcionamiento coordinado del nodo.
 \end{itemize}
 
-El nodo sensor no solo recopila datos visuales y ambientales, sino que también ofrece una interfaz directa para los operadores mediante la pantalla LCD y almacena la información adquirida en el recorrido. Estas funciones permiten que el sistema funcione de manera autónoma, registrando datos valiosos para su análisis posterior. Además, la modularidad del nodo facilita la expansión del sistema en futuras versiones, con la posibilidad de incorporar más sensores o mejorar su capacidad de procesamiento. La figura \ref{fig:nodo_sensor} muestra la composición de este nodo.
+El nodo sensor no solo recopila datos visuales y ambientales, sino que también ofrece una interfaz directa para los operadores mediante la pantalla LCD y almacena la información adquirida en el recorrido. Estas funciones permiten que el sistema funcione de manera autónoma, lo que permite el registro de datos valiosos para su análisis posterior. Además, la modularidad del nodo facilita la expansión del sistema en futuras versiones, con la posibilidad de incorporar más sensores o mejorar su capacidad de procesamiento. La figura \ref{fig:nodo_sensor} muestra la composición de este nodo.
 
 \vspace{1cm}
 
@@ -160,7 +160,7 @@ Driver para la pantalla LCD: este controlador gestiona la visualización de dato
 \begin{itemize}
 \item Refrescar pantalla: actualiza la información mostrada en la pantalla para reflejar los datos más recientes.
 \item Mostrar mensaje en pantalla: presenta un mensaje específico en la pantalla para el usuario.
-\item Limpiar pantalla: borra el contenido actual, dejando la pantalla en blanco.
+\item Limpiar pantalla: borra el contenido actual en la pantalla.
 \item Escribir al comienzo de la línea: permite escribir texto desde el inicio de una línea específica.
 \item Escribir al final de la línea: escribe texto en la posición final de una línea seleccionada.
 \end{itemize}
@@ -181,24 +181,28 @@ Driver del lector de tarjetas SD: este controlador permite el almacenamiento seg
 La capa de aplicación representa el nivel jerárquico superior del sistema y se implementó sobre el sistema operativo en tiempo real FreeRTOS, lo que permite una mayor escalabilidad del código. Esta capa coordina y organiza la lógica de las funciones avanzadas del sistema mediante tres tareas principales, descritas a continuación:
 
 \begin{itemize}
-\item Loop del sistema: esta tarea proporciona la secuencialidad necesaria para que el sistema funcione de manera continua y ordenada. Actúa como el “hilo conductor” de todas las operaciones, gestionando el flujo de actividades y garantizando que cada módulo cumpla su función en el momento oportuno.
-\item Adquisición de datos: responsable de leer los datos provenientes de cada sensor, esta tarea asegura que el sistema capture información ambiental y visual de manera constante y precisa. Además, coordina las peticiones de cada sensor para evitar conflictos y optimizar el uso de recursos, permitiendo que la información obtenida esté lista para su posterior procesamiento y análisis.
-\item Manejador de alarmas: esta tarea supervisa las condiciones críticas del sistema, activando alarmas ante eventos como desconexión de dispositivos o falta de memoria. El manejador de alarmas proporciona una capa de seguridad adicional, alertando sobre posibles problemas de funcionamiento y evitando fallos en el sistema mediante la implementación de respuestas rápidas y automáticas a estos eventos.
+\item Loop del sistema: esta tarea proporciona la secuencialidad necesaria para que el sistema funcione de manera continua y ordenada. Actúa como el “hilo conductor” de todas las operaciones, que gestiona el flujo de actividades y garantiza que cada módulo cumpla su función en el momento oportuno.
+\item Adquisición de datos: responsable de leer los datos provenientes de cada sensor, esta tarea asegura que el sistema capture información ambiental y visual de manera constante y precisa. Además, coordina las peticiones de cada sensor para evitar conflictos y optimizar el uso de recursos, lo que permite que la información esté lista para su posterior procesamiento y análisis.
+\item Manejador de alarmas: esta tarea supervisa las condiciones críticas del sistema, como alertas ante eventos de desconexión en los dispositivos o falta de memoria. El manejador de alarmas proporciona una capa de seguridad adicional, que alerta sobre posibles problemas de funcionamiento y evitar fallos en el sistema.
 \end{itemize}
 
 \subsection{Modelo de detección de objetos}
 
-El modelo de detección de objetos es el componente encargado de analizar las imágenes adquiridas por el nodo sensor. Este modelo, basado en técnicas de visión por computadora y aprendizaje automático, tiene la capacidad de identificar y contar los frutos presentes en las imágenes, diferenciando entre frutos maduros y aquellos que no lo están. Cabe recordar que, como se mencionó en el capítulo \ref{Aspectos_no_incluidos_en_el_prototipo}, el desarrollo de este modelo no forma parte de este trabajo, pero es un componente esencial en la funcionalidad completa del sistema. 
+El modelo de detección de objetos es el componente encargado de analizar las imágenes adquiridas por el nodo sensor. Este modelo, basado en técnicas de visión por computadora y aprendizaje automático, tiene la capacidad de identificar y contar los frutos presentes en las imágenes. Cabe recordar que, como se mencionó en el capítulo \ref{Aspectos_no_incluidos_en_el_prototipo}, el desarrollo de este modelo no forma parte de este trabajo, pero es un componente esencial en la funcionalidad completa del sistema. 
 
 \newpage
 
 \section{Arquitectura del firmware}
 
-La arquitectura del firmware del sistema está diseñada para optimizar la coordinación y el control de múltiples componentes, asegurando una operación eficiente y una respuesta rápida a eventos internos y externos. Se implementaron dos patrones arquitectónicos principales: el patrón de observar y reaccionar y el de segmentación de procesos, cada uno de ellos cumple funciones específicas dentro de la estructura del firmware.
+La arquitectura del firmware del sistema está diseñada para optimizar la coordinación y el control de múltiples componentes, lo que asegura una operación eficiente y una respuesta rápida a eventos internos y externos. Se implementaron dos patrones arquitectónicos principales: el patrón de observar y reaccionar y el de segmentación de procesos, cada uno de ellos cumple funciones específicas dentro de la estructura del firmware.
 
 \subsection{Patrón de observar y reaccionar}
 
-Este patrón mostrado en la figura \ref{fig:patron_de_observar_y_reaccionar} permite que el sistema responda de inmediato a cambios en el entorno o en los estados de los componentes. En la práctica, cada módulo del firmware permanece en constante monitoreo de las señales y datos provenientes de los sensores y dispositivos externos, como el sensor de temperatura y humedad, el sensor ultrasónico y la cámara. Cuando alguno de estos dispositivos genera un cambio relevante en sus lecturas (por ejemplo, una variación de temperatura o una nueva imagen capturada), el sistema ``observa'' esta alteración y automáticamente ``reacciona'' ejecutando las acciones correspondientes, como almacenar los datos en la SD o actualizar la pantalla LCD. Este enfoque facilita una respuesta inmediata a los eventos sin la necesidad de que el sistema esté en modo de consulta continua, esto optimiza el uso de los recursos y reduce la latencia en la toma de decisiones.
+Este patrón mostrado en la figura \ref{fig:patron_de_observar_y_reaccionar} permite que el sistema responda de inmediato a cambios en el entorno o en los estados de los componentes. En la práctica, cada módulo del firmware permanece en constante monitoreo de las señales y datos provenientes de los sensores y dispositivos externos, como el sensor de temperatura y humedad, el sensor ultrasónico y la cámara. 
+
+En el momento que alguno de estos dispositivos genera un cambio relevante en sus lecturas (por ejemplo, una variación de temperatura o una nueva imagen capturada), el sistema ``observa'' esta alteración y automáticamente ``reacciona'' para ejecutar las acciones correspondientes, como almacenar los datos en la SD o actualizar la pantalla LCD. 
+
+Este enfoque facilita una respuesta inmediata a los eventos sin la necesidad de que el sistema esté en modo de consulta continua, esto optimiza el uso de los recursos y reduce la latencia en la toma de decisiones.
 
 \vspace{1cm}
 \begin{figure}[htbp]
@@ -213,7 +217,11 @@ Este patrón mostrado en la figura \ref{fig:patron_de_observar_y_reaccionar} per
 
 \subsection{Patrón de segmentación de procesos}
 
-Este patrón mostrado en la figura \ref{fig:segmentacion_de_procesos} se utiliza para transformar los datos obtenidos de los sensores, convirtiéndolos de su formato original a una representación adecuada antes de que puedan ser procesados eficazmente. Al realizar esta transformación inicial, el sistema asegura que los datos se presenten de manera uniforme y comprensible, lo que optimiza la precisión y consistencia en las etapas posteriores de procesamiento. Por ejemplo, los valores crudos obtenidos del sensor de temperatura pueden ser transformados en grados Celsius o Fahrenheit según las necesidades del sistema, y los datos del sensor ultrasónico se convierten en metros o centímetros. Esta normalización facilita que otros módulos del firmware interpreten los datos de manera rápida y sin ambigüedades, lo que permite una respuesta más eficiente y coherente en la operación del sistema.
+Este patrón mostrado en la figura \ref{fig:segmentacion_de_procesos} se utiliza para transformar los datos obtenidos de los sensores, convirtiéndolos de su formato original a una representación adecuada antes de que puedan ser procesados eficazmente. 
+
+Al realizar esta transformación inicial, el sistema asegura que los datos se presenten de manera uniforme y comprensible, lo que optimiza la precisión y consistencia en las etapas posteriores de procesamiento. Por ejemplo, los valores crudos obtenidos del sensor de temperatura pueden ser transformados en grados Celsius o Fahrenheit según las necesidades del sistema, y los datos del sensor ultrasónico se convierten en metros o centímetros. 
+
+Esta normalización facilita que otros módulos del firmware interpreten los datos de manera rápida y sin ambigüedades, en consecuencia permite una respuesta más eficiente y coherente en la operación del sistema.
 
 \vspace{1cm}
 \begin{figure}[htbp]
@@ -226,7 +234,9 @@ Este patrón mostrado en la figura \ref{fig:segmentacion_de_procesos} se utiliza
 
 \section{Módulos del firmware}
 
-Los módulos están organizados en el firmware como funciones independientes que operan de forma coordinada y autónoma. Al segmentar el procesamiento, el firmware asigna tareas específicas a cada módulo, permitiendo que estos funcionen de manera paralela y reduciendo el riesgo de interferencias entre procesos. Así, tareas como la captura de imágenes, el monitoreo ambiental y el manejo de la interfaz de usuario pueden ejecutarse sin interrupciones, manteniendo una operación fluida y eficiente. Además, la segmentación facilita la escalabilidad del firmware, ya que los módulos pueden ser modificados o ampliados sin afectar la arquitectura completa, permitiendo agregar nuevos dispositivos o mejorar funcionalidades en futuras versiones del sistema. Cada módulo mostrado en la figura \ref{fig:modulos_del_firmware} representa a los drivers mencionados en la sección \ref{Capa_drivers}.
+Los módulos están organizados en el firmware como funciones independientes que operan de forma coordinada y autónoma. Al segmentar el procesamiento, el firmware asigna tareas específicas a cada módulo, lo que permite que funcionen de manera paralela y reducir el riesgo de interferencias entre procesos. Así, tareas como la captura de imágenes, el monitoreo ambiental y el manejo de la interfaz de usuario pueden ejecutarse sin interrupciones.
+
+Además, la segmentación facilita la escalabilidad del firmware, ya que los módulos pueden ser modificados o ampliados sin afectar la arquitectura completa, lo que permite agregar nuevos dispositivos o mejorar funcionalidades en futuras versiones del sistema. Cada módulo mostrado en la figura \ref{fig:modulos_del_firmware} representa a los drivers mencionados en la sección \ref{Capa_drivers}.
 
 \newpage
 
@@ -244,16 +254,16 @@ Los módulos operan de manera estructurada y siguen una secuencia de pasos espec
 \begin{itemize}
 \item Módulo de sensor de temperatura: recibe los datos de temperatura directamente del sensor y los transfiere al proceso de análisis de datos para su interpretación y uso en el sistema.
 \item Módulo de sensor de humedad: recolecta las lecturas de humedad y las dirige al proceso de análisis de datos, donde estas mediciones contribuyen a la evaluación del entorno del sistema.
-\item Monitor de sensor de distancia: captura los datos del sensor de distancia y los envía al proceso de análisis de datos, permitiendo la verificación de la proximidad de los objetos capturados por la cámara.
-\item Módulo de pantalla LCD: asegura que la información generada por el sistema, incluidos los datos de sensores y el estado operativo, se muestre correctamente en el display, proporcionando al usuario una visión clara y accesible.
+\item Monitor de sensor de distancia: captura los datos del sensor de distancia y los envía al proceso de análisis de datos, lo que permite la verificación de la proximidad de los objetos capturados por la cámara.
+\item Módulo de pantalla LCD: asegura que la información generada por el sistema, incluidos los datos de sensores y el estado operativo, se muestre correctamente en el display, lo que proporciona al usuario una visión clara y accesible.
 
 \newpage
 
-\item Módulo de tarjeta SD: gestiona el almacenamiento permanente de datos en la tarjeta SD, al recibir la información ya procesada desde el proceso principal. Cuando el sistema lo requiere, consulta la memoria para recuperar datos históricos y los transfiere de vuelta al proceso principal.
+\item Módulo de tarjeta SD: gestiona el almacenamiento permanente de datos en la tarjeta SD, al recibir la información ya procesada desde el proceso principal. Si el sistema lo requiere, puede consultar la memoria para recuperar datos históricos y los transfiere de vuelta al proceso principal.
 \item Módulo de cámara: realiza las capturas de imagen y las dirige al proceso de análisis de datos, donde se realiza el procesamiento visual o cualquier análisis relevante que se integre a los cálculos generales.
-\item Proceso de análisis de datos: procesa los datos obtenidos por los sensores, generando los cálculos necesarios para obtener parámetros clave del entorno. Una vez procesados, envía estos resultados al proceso principal o, si se detecta algún valor fuera de lo normal, lo comunica directamente al proceso de alarmas.
-\item Proceso de alarmas: recibe las alertas generadas por el proceso de análisis de datos cuando se detectan valores anómalos. Actúa generando las alarmas correspondientes y las envía al proceso principal para su gestión.
-\item Proceso principal: coordina el sistema central, gestionando la solicitud y envío de datos al módulo de almacenamiento en la tarjeta SD y transfiriendo los resultados relevantes al módulo de pantalla LCD, manteniendo una interacción eficiente y fluida entre los componentes.
+\item Proceso de análisis de datos: procesa los datos obtenidos por los sensores, lo que genera los cálculos necesarios para obtener parámetros clave del entorno. Una vez procesados, envía estos resultados al proceso principal o, si se detecta algún valor fuera de lo normal, lo comunica directamente al proceso de alarmas.
+\item Proceso de alarmas: recibe las alertas generadas por el proceso de análisis de datos al detectar valores anómalos. Luego las envía al proceso principal para su gestión.
+\item Proceso principal: coordina el sistema central, para gestionar la solicitud y envío de datos al módulo de almacenamiento en la tarjeta SD y transfiere los resultados relevantes al módulo de pantalla LCD, lo que mantiene una interacción eficiente y fluida entre los componentes.
 \end{itemize}
 
 \section{Desarrollo del firmware}
@@ -262,9 +272,9 @@ Para el desarrollo del firmware se empleó STM32CubeIDE, el entorno de desarroll
 
 El firmware se implementó sobre FreeRTOS, un sistema operativo en tiempo real ampliamente utilizado en sistemas embebidos. En este desarrollo se integraron varias de las funcionalidades de FreeRTOS, como las colas para la transferencia ordenada de datos entre tareas, los semáforos para la sincronización entre procesos, y el uso de tareas específicas para segmentar las funciones del firmware. Además, se configuraron diversas interrupciones que permiten al sistema reaccionar instantáneamente ante eventos externos, como la llegada de datos de un sensor o la detección de un cambio en el entorno de trabajo.
 
-Este diseño modular del firmware, permite la implementación de colas y semáforos, el sistema logra una comunicación eficiente entre sus distintos módulos, manteniendo la integridad de los datos y evitando bloqueos o conflictos en el flujo de información.
+Este diseño modular del firmware permite la implementación de colas y semáforos, el sistema logra una comunicación eficiente entre sus distintos módulos, lo que mantiene la integridad de los datos y evitar bloqueos o conflictos en el flujo de información.
 
-En la Figura \ref{fig:DdF_firmware} se presenta un diagrama de flujo que describe el proceso de inicialización del firmware. Este diagrama ilustra cada uno de los pasos que el sistema sigue desde el inicio, pasando por la configuración de los periféricos y la inicialización de las tareas del sistema, hasta el punto en que el firmware queda listo para operar. La organización detallada del flujo de inicialización asegura que cada módulo y sensor del nodo funcione correctamente y en el orden adecuado, garantizando la estabilidad y eficiencia del sistema durante su funcionamiento.
+En la Figura \ref{fig:DdF_firmware} se presenta un diagrama de flujo que describe el proceso de inicialización del firmware. Este diagrama ilustra cada uno de los pasos que el sistema sigue desde el inicio, luego por la configuración de los periféricos y la inicialización de las tareas del sistema, hasta el punto en que el firmware queda listo para operar. La organización detallada del flujo de inicialización asegura que cada módulo y sensor del nodo funcione correctamente y en el orden adecuado, lo que garantiza una estabilidad y eficiencia del sistema durante su funcionamiento.
 
 \vspace{1cm}
 \begin{figure}[htbp]
@@ -275,7 +285,7 @@ En la Figura \ref{fig:DdF_firmware} se presenta un diagrama de flujo que describ
 \end{figure}
 \vspace{1cm}
 
-Para el control del sistema se crearon dos tareas sobre freeRTOS, que se comunican
+Para el control del sistema se crearon dos tareas sobre FreeRTOS, que se comunican
 y se sincronizan a través de colas y semáforos.
 
 \newpage
@@ -284,11 +294,13 @@ y se sincronizan a través de colas y semáforos.
 
 La tarea de adquisición de datos cumple un rol esencial en la obtención de las lecturas de los sensores y en la garantía de un flujo continuo y preciso de información hacia el sistema. Esta tarea sigue un flujo estructurado, mostrado en el diagrama de flujo de la Figura \ref{fig:DdF_tarea_adquisición_datos}, donde cada paso asegura que los datos sean recogidos y procesados de manera eficiente.
 
-El proceso de adquisición comienza verificando la cola de adquisición para detectar si existen solicitudes pendientes de datos. Si la cola contiene datos, la tarea procede a iniciar la lectura de todos los sensores del sistema. Estos datos, una vez adquiridos, se colocan en la cola de datos y alarmas, lo que permite que otros procesos, como el análisis y las alarmas, acceder a la información en tiempo real.
+El proceso de adquisición comienza con la verificación de la cola de adquisición para detectar si existen solicitudes pendientes de datos. Si la cola contiene datos, la tarea procede a iniciar la lectura de todos los sensores del sistema. Estos datos, una vez adquiridos, se colocan en la cola de datos y alarmas, lo que permite que otros procesos, como el análisis y las alarmas, accedan a la información en tiempo real.
 
-En caso de que la cola de adquisición esté vacía, la tarea de adquisición de datos se bloquea temporalmente para optimizar el uso de recursos, permaneciendo en espera hasta que una nueva solicitud de datos sea recibida en la cola. Esta capacidad de bloqueo y activación automática asegura que el sistema mantenga su eficiencia y libere recursos cuando no se requiera una lectura inmediata, además de garantizar que los datos recogidos sean siempre actuales.
+En caso de que la cola de adquisición esté vacía, la tarea de adquisición de datos se bloquea temporalmente para optimizar el uso de recursos, al permanecer en espera hasta que una nueva solicitud sea recibida en la cola. Esta capacidad de bloqueo y activación automática asegura que el sistema mantenga su eficiencia y libere recursos en el momento que no se requiera una lectura inmediata, además de garantizar que los datos recogidos sean siempre actuales.
 
 Cada vez que los valores leídos presentan variaciones significativas o caen fuera de los rangos normales, el sistema de alarmas puede actuar en función de estos datos y enviar una alerta al proceso de alarmas, que luego gestiona la respuesta adecuada en el sistema.
+
+\newpage
 
 \vspace{1cm}
 \begin{figure}[htbp]
@@ -301,23 +313,21 @@ Cada vez que los valores leídos presentan variaciones significativas o caen fue
 
 \subsection{Tarea manejador de alarmas}
 
-La tarea de manejador de alarmas supervisa los valores de los sensores para asegurar que se mantengan dentro de los límites permitidos de cada variable. En caso de detectar algún valor fuera de los parámetros establecidos, la tarea activa una alarma para alertar al sistema. El diagrama de flujo de esta tarea puede observarse en la Figura \ref{fig:DdF_tarea_manejador_alarmas}.
+El manejador de alarmas supervisa los valores de los sensores para asegurar que se mantengan dentro de los límites permitidos de cada variable. En caso de detectar algún valor fuera de los parámetros establecidos, activa una alarma para alertar al sistema. El diagrama de flujo de esta tarea puede observarse en la Figura \ref{fig:DdF_tarea_manejador_alarmas}.
 
-Al comenzar el bucle infinito de monitoreo, la tarea inspecciona de manera constante la cola de alarmas en busca de eventos. Si se encuentran datos en esta cola, la tarea analiza la información recibida, que puede indicar dos tipos de eventos: monitorear y enviar.
+Al comenzar el bucle infinito de monitoreo, el manejador inspecciona de manera constante la cola de alarmas en busca de eventos. Si se encuentran datos en esta cola, analiza la información recibida, que puede indicar dos tipos de eventos: monitorear y enviar.
 
 \begin{itemize}
-\item Evento monitorear: la tarea verifica si el valor de cada sensor cae por debajo o excede los valores de límite previamente definidos para cada variable. Si alguno de estos valores infringe los límites, la tarea incrementa una variable que registra la cantidad de alarmas activas en el sistema. Esta información resulta fundamental para monitorear el estado del sistema en tiempo real y detectar situaciones de riesgo de manera inmediata.
+\item Evento monitorear: verifica si el valor de cada sensor cae por debajo o excede los valores de límite previamente definidos para cada variable. Si alguno de estos valores infringe los límites, se incrementa una variable que registra la cantidad de alarmas activas en el sistema. Esta información resulta fundamental para monitorear el estado del sistema en tiempo real y detectar situaciones de riesgo de manera inmediata.
 \item Evento enviar: se verifica si existen alarmas activas en el sistema. En caso afirmativo, notifica al proceso principal para que ejecute las acciones necesarias, como activar una alerta visual. Esta comunicación garantiza una respuesta rápida y adecuada ante cualquier situación crítica detectada.
 \end{itemize}
 
-Cuando no se encuentran datos en la cola de alarmas, la tarea entra en un estado de bloqueo, optimizando el uso de recursos del sistema al detener temporalmente su ejecución hasta que se reciba un nuevo dato en la cola. Esta estructura permite que el sistema opere de manera eficiente, reaccionando ante anomalías únicamente cuando estas ocurren y sin consumir recursos innecesarios en condiciones normales.
-
-\newpage
+En el momento que no se encuentren datos en la cola de alarmas, la tarea entra en un estado de bloqueo. Esto optimiza el uso de recursos y detiene temporalmente la ejecución hasta que se recibe un nuevo dato. Esta estructura permite que el sistema opere de manera eficiente, ya que reacciona solo ante anomalías y no consume recursos innecesarios en condiciones normales.
 
 \vspace{1cm}
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=1.0\textwidth, height=0.7\textheight]{./Figures/DdF_tarea_manejador_alarmas.png}
+	\includegraphics[width=1.0\textwidth, height=0.6\textheight]{./Figures/DdF_tarea_manejador_alarmas.png}
 	\caption{Diagrama de flujo de la tarea manejadora de alarmas.}
 	\label{fig:DdF_tarea_manejador_alarmas}
 \end{figure}
